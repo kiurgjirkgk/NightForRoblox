@@ -232,7 +232,7 @@ startautoparry = function()
                         raptureremote:FireServer(unpack(args))
                     end
                 end
-                speed -= 13
+                speed -= 8
                 if (speed / mag) >= (parrydist) and speed > 50 or 25 > mag then
                     if canautoparry and canhit and speed > 0 then
                         if speedy > 30 and speed >= 280 then
