@@ -232,13 +232,76 @@ spawn(function()
                     local plrwithball = getplayerwithball()
                     if plrwithball and plrwithball.Character and plrwithball.Character.PrimaryPart then
                         local dist = lp:DistanceFromCharacter(plrwithball.Character.PrimaryPart.Position)
-                        if 16 > dist then
+                        if 12 > dist then
                             rstorage.RemoteEvents.Football.Shoot:FireServer()
                         end
                     end
                     task.wait(0.001)
                 until not enabled
             end
+        end
+    })
+end)
+
+spawn(function()
+    local canwalkspeed = false
+    local walkspeedcon  = {}
+    local old = controls.anticheat.DetermineWSpeed
+    local walkspeedspped = 180
+    local walkspeed = tabs.player:Toggle({
+        name = "WalkSpeed",
+        def = false, 
+        button = false,
+        callback = function(call) 
+            canwalkspeed = call
+            if canwalkspeed then
+                controls.anticheat.DetermineWSpeed = function() return "oh noes!!!!" end
+                if lp.Character and lp.Character:FindFirstChildOfClass("Humanoid") then
+                    lp.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = walkspeedspped
+                end
+                table.insert(walkspeedcon, lp.characterAdded:connect(function()
+                    task.wait(0.1)
+                    if lp.Character and lp.Character:FindFirstChildOfClass("Humanoid") then
+                        lp.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = walkspeedspped
+                    end
+                    table.insert(walkspeedcon, lp.Character:FindFirstChildOfClass("Humanoid"):GetPropertyChangedSignal("WalkSpeed"):connect(function()
+                        task.wait(0.1)
+                        if lp.Character and lp.Character:FindFirstChildOfClass("Humanoid") then
+                            lp.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = walkspeedspped
+                        end
+                    end))
+                end))
+                table.insert(walkspeedcon, lp.Character:FindFirstChildOfClass("Humanoid"):GetPropertyChangedSignal("WalkSpeed"):connect(function()
+                    task.wait(0.1)
+                    if lp.Character and lp.Character:FindFirstChildOfClass("Humanoid") then
+                        lp.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = walkspeedspped
+                    end
+                end))
+            else
+                for i,v in next, walkspeedcon do
+                    v:Disconnect()
+                end
+                table.clear(walkspeedcon)
+                if lp.Character and lp.Character:FindFirstChildOfClass("Humanoid") then
+                    lp.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = 16
+                end
+                controls.anticheat.DetermineWSpeed = old
+            end
+        end
+    })
+    walkspeed:Slider({
+        name = "Speed",
+        min = 0,
+        max = 400,
+        def = walkspeedspped,
+        decimals = 0,
+        callback = function(call)
+            if canwalkspeed then
+                if lp.Character and lp.Character:FindFirstChildOfClass("Humanoid") then
+                    lp.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = call
+                end
+            end
+            walkspeedspped = call
         end
     })
 end)
