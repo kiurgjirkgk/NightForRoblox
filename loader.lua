@@ -4,14 +4,9 @@ local mainrepgames = "https://github.com/kiurgjirkgk/NightForRoblox/blob/main/ga
 local rawmainrep = "https://raw.githubusercontent.com/kiurgjirkgk/NightForRoblox/main/games/"
 
 local suc, err = pcall(function()
-    local req 
+    local req
     req = http.request({
-        Url = string.format("https://apis.roblox.com/universes/v1/places/%s/universe", game.PlaceId),
-        Method = "GET"
-    }).Body
-    local unid = https:JSONDecode(req).universeId
-    req = http.request({
-        Url = "https://games.roblox.com/v1/games?universeIds="..tostring(unid),
+        Url = "https://games.roblox.com/v1/games?universeIds="..tostring(game.GameId),
         Method = "GET"
     }).Body
     rootid = https:JSONDecode(req).data[1].rootPlaceId
