@@ -48,17 +48,20 @@ if not isfolder("Night/Config") then
     makefolder("Night/Config")
 end
 
-local req 
-req = http.request({
-    Url = string.format("https://apis.roblox.com/universes/v1/places/%s/universe", game.PlaceId),
-    Method = "GET"
-}).Body
-local unid = https:JSONDecode(req).universeId
-req = http.request({
-    Url = "https://games.roblox.com/v1/games?universeIds="..tostring(unid),
-    Method = "GET"
-}).Body
-local rootid = https:JSONDecode(req).data[1].rootPlaceId
+local rootid = game.PlaceId
+pcall(function()
+    local req 
+    req = http.request({
+        Url = string.format("https://apis.roblox.com/universes/v1/places/%s/universe", game.PlaceId),
+        Method = "GET"
+    }).Body
+    local unid = https:JSONDecode(req).universeId
+    req = http.request({
+        Url = "https://games.roblox.com/v1/games?universeIds="..tostring(unid),
+        Method = "GET"
+    }).Body
+    rootid = https:JSONDecode(req).data[1].rootPlaceId
+end)
 if not isfolder("Night/Config/"..rootid) then
     makefolder("Night/Config/"..rootid)
 end
