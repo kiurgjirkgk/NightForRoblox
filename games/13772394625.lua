@@ -152,6 +152,7 @@ local cframes = {
 
 local canautoparry = false
 local canautorapture = true
+local autocurve = true
 local canautospam = true
 local parrydist = 1.65
 local oldparrydist = 1.65
@@ -184,9 +185,10 @@ startautoparry = function()
                 else
                     plrtab = {[tostring(getcloseplr().Name)] = getcloseplr().Character.PrimaryPart.Position}
                 end
+                local cf = autocurve and cframes[math.random(1, #cframes)] or CFrame.new(0,0,0)
                 local args = {
                     [1] = 0.5,
-                    [2] = cframes[math.random(1, #cframes)],
+                    [2] = cf,
                     [3] = plrtab,
                     [4] = {
                         [1] = math.random(200, 500),
@@ -305,6 +307,13 @@ autoparry:MiniToggle({
     def = true,
     callback = function(call)
         canautospam = call
+    end
+})
+autoparry:MiniToggle({
+    name = "AutoCurve",
+    def = true,
+    callback = function(call)
+        autocurve = call
     end
 })
 
