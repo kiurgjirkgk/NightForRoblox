@@ -619,7 +619,7 @@ function guilib:NewTab(args)
         TextBox_2.BackgroundTransparency = 1.000
         TextBox_2.Size = UDim2.new(0, 18, 0, 18)
         TextBox_2.Font = Enum.Font.GothamBold
-        TextBox_2.PlaceholderText = "Z"
+        TextBox_2.PlaceholderText = "?"
         TextBox_2.Text = ""
         TextBox_2.TextColor3 = Color3.fromRGB(255, 255, 255)
         TextBox_2.TextSize = 10.000
