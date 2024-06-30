@@ -151,9 +151,8 @@ local cframes = {
 }
 
 local canautoparry = false
-local canautorapture = true
-local autocurve = true
-local canautospam = true
+local canautorapture = false
+local canautospam = false
 local parrydist = 1.65
 local oldparrydist = 1.65
 local autospamspeed = 8
@@ -185,10 +184,9 @@ startautoparry = function()
                 else
                     plrtab = {[tostring(getcloseplr().Name)] = getcloseplr().Character.PrimaryPart.Position}
                 end
-                local cf = autocurve and cframes[math.random(1, #cframes)] or CFrame.new(0,0,0)
                 local args = {
                     [1] = 0.5,
-                    [2] = cf,
+                    [2] = cframes[math.random(1, #cframes)],
                     [3] = plrtab,
                     [4] = {
                         [1] = math.random(200, 500),
@@ -232,7 +230,7 @@ startautoparry = function()
                         raptureremote:FireServer(unpack(args))
                     end
                 end
-                speed -= 8
+                speed -= 13
                 if (speed / mag) >= (parrydist) and speed > 50 or 25 > mag then
                     if canautoparry and canhit and speed > 0 then
                         if speedy > 30 and speed >= 280 then
@@ -307,13 +305,6 @@ autoparry:MiniToggle({
     def = true,
     callback = function(call)
         canautospam = call
-    end
-})
-autoparry:MiniToggle({
-    name = "AutoCurve",
-    def = true,
-    callback = function(call)
-        autocurve = call
     end
 })
 
