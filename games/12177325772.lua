@@ -60,7 +60,7 @@ end
 local autoscoreenabled = false
 local respawnball = false
 spawn(function()
-    local teamcheck = true
+    local teamcheck = false
     local autoscore = tabs.Main:Toggle({
         name = "AutoScore",
         def = false,
