@@ -1288,7 +1288,7 @@ function guilib:NewTab(args)
                     ts:Create(maintoggle, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(255, 101, 104)}):Play()
                     ts:Create(circle, TweenInfo.new(0.2), {Position = UDim2.new(0.55, 0,0.3, 0)}):Play()
                 end
-            elseif deff and not isfile(string.format("Night/Config/%s/minitoggles/%s.lua", rootid, name)) then 
+            elseif def and not isfile(string.format("Night/Config/%s/minitoggles/%s.lua", rootid, name)) then 
                 enabled = true
                 callback(enabled)
                 ts:Create(maintoggle, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(255, 101, 104)}):Play()
