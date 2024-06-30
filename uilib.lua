@@ -1305,7 +1305,7 @@ function guilib:NewTab(args)
                     ts:Create(circle, TweenInfo.new(0.2), {Position = UDim2.new(0.149, 0,0.3, 0)}):Play()
                 end
                 setconfigmini()
-                writefile(string.format("Night/Config/%s/minitoggles/%s.lua", rootid, name), tostring(toggled))
+                writefile(string.format("Night/Config/%s/minitoggles/%s.lua", rootid, name), tostring(enabled))
                 callback(enabled)
             end)
         end
