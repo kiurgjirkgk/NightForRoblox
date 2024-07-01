@@ -906,6 +906,7 @@ function guilib:NewTab(args)
             Slider.Position = UDim2.new(0, 0, 0.735042751, 0)
             Slider.Size = UDim2.new(0, 169, 0, 25)
             Slider.Text = ""
+            Slider.AutoButtonColor = false
 
             UICorner.CornerRadius = UDim.new(0, 6)
             UICorner.Parent = Slider
@@ -946,6 +947,7 @@ function guilib:NewTab(args)
             fill.Selectable = false
             fill.Size = UDim2.new(0, 100, 0, 25)
             fill.Text = ""
+            fill.AutoButtonColor = false
 
             UICorner_2.CornerRadius = UDim.new(0, 6)
             UICorner_2.Parent = fill
