@@ -1,3 +1,4 @@
+repeat task.wait() until game:IsLoaded()
 local canload = true
 local past = {}
 local suc, err = pcall(function()
