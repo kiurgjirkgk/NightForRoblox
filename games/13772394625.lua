@@ -4,7 +4,7 @@ local executortext = "(Unknown Executor)"
 if identifyexecutor() and 15 >= #identifyexecutor() then
     executortext = string.format("(%s)", identifyexecutor())
 end 
-guilib:Init({title = string.format("Night RBX%s", executortext)})
+guilib:Init({title = string.format("Night RBX%s ", executortext)})
 local tabs = {
     Main = guilib:NewTab({name = "Main", icon = "rbxassetid://17873742976"}),
     player = guilib:NewTab({name = "Player", icon = "rbxassetid://17873721855"}),
@@ -85,7 +85,7 @@ getplrs = function()
 end
 
 getcloseplr = function()
-    local plr = nil
+    local plr
     local dista = math.huge
     for i,v in next, plrs:GetPlayers() do
         if v and v ~= lp and v.Character and v.Character:IsDescendantOf(game:GetService("Workspace"):FindFirstChild("Alive")) and v.Character:FindFirstChildOfClass("Humanoid") and v.Character:FindFirstChildOfClass("Humanoid").Health > 0 and v.Character.PrimaryPart then
@@ -153,9 +153,10 @@ local cframes = {
 local canautoparry = false
 local canautorapture = false
 local canautospam = false
+local canautocurve = false
 local parrydist = 1.65
 local oldparrydist = 1.65
-local autospamspeed = 8
+local autospamspeed = 12
 local parrycon = {}
 
 startautoparry = function()
@@ -178,16 +179,10 @@ startautoparry = function()
                 reset = true 
                 local speed = ball.AssemblyLinearVelocity.Magnitude
                 local speedy = ball.AssemblyLinearVelocity.Y
-                local plrtab
-                if not getcloseplr() then
-                    plrtab = getplrs()
-                else
-                    plrtab = {[tostring(getcloseplr().Name)] = getcloseplr().Character.PrimaryPart.Position}
-                end
                 local args = {
                     [1] = 0.5,
-                    [2] = cframes[math.random(1, #cframes)],
-                    [3] = plrtab,
+                    [2] = canautocurve and cframes[math.random(1, #cframes)] or CFrame.new(0,0,0),
+                    [3] = getcloseplr() and {[tostring(getcloseplr().Name)] = getcloseplr().Character.PrimaryPart.Position} or getplrs(),
                     [4] = {
                         [1] = math.random(200, 500),
                         [2] = math.random(100, 200)
@@ -230,7 +225,10 @@ startautoparry = function()
                         raptureremote:FireServer(unpack(args))
                     end
                 end
-                speed -= 13
+                speed -= 15
+                if lp.Character:FindFirstChildWhichIsA("Humanoid") and lp.Character:FindFirstChildWhichIsA("Humanoid").MoveDirection ~= Vector3.zero then
+                    speed -= 2.75
+                end
                 if (speed / mag) >= (parrydist) and speed > 50 or 25 > mag then
                     if canautoparry and canhit and speed > 0 then
                         if speedy > 30 and speed >= 280 then
@@ -307,6 +305,13 @@ autoparry:MiniToggle({
         canautospam = call
     end
 })
+autoparry:MiniToggle({
+    name = "AutoCurve",
+    def = true,
+    callback = function(call)
+        canautocurve = call
+    end
+})
 
 
 
@@ -324,16 +329,10 @@ spawn(function()
                 table.insert(manspamcons, game:GetService("RunService").PreRender:Connect(function() 
                     for i = 1,manualspamspeed do
                         if not enabled then break end
-                        local plrtab
-                        if not getcloseplr() then
-                            plrtab = getplrs()
-                        else
-                            plrtab = {[tostring(getcloseplr().Name)] = getcloseplr().Character.PrimaryPart.Position}
-                        end
                         local args = {
                             [1] = 0.5,
                             [2] = cframes[math.random(1, #cframes)],
-                            [3] = plrtab,
+                            [3] = getcloseplr() and {[tostring(getcloseplr().Name)] = getcloseplr().Character.PrimaryPart.Position} or getplrs(),
                             [4] = {
                                 [1] = math.random(200, 500),
                                 [2] = math.random(100, 200)
@@ -408,7 +407,7 @@ spawn(function()
                     if targetplr and checkplr(targetplr) then
                         if checkplr(lp) then
                             lp.Character:FindFirstChildWhichIsA("Humanoid"):MoveTo(targetplr.Character.PrimaryPart.Position + targetplr.Character.PrimaryPart.CFrame.LookVector * 24.5)
-                            lp.Character:FindFirstChildWhichIsA("Humanoid"):MoveTo(targetplr.Character.PrimaryPart.Position + targetplr.Character.PrimaryPart.CFrame.LookVector * 23.5)
+                            lp.Character:FindFirstChildWhichIsA("Humanoid"):MoveTo(targetplr.Character.PrimaryPart.Position + targetplr.Character.PrimaryPart.CFrame.LookVector * 20.5)
                             lp.Character:FindFirstChildWhichIsA("Humanoid"):MoveTo(targetplr.Character.PrimaryPart.Position + targetplr.Character.PrimaryPart.CFrame.LookVector * 25.5)
                         end
                     end
