@@ -759,25 +759,25 @@ function guilib:NewTab(args)
                 TextBox_2:ReleaseFocus(true)
             end)
             cloneref(game:GetService("UserInputService")).InputBegan:Connect(function(input)
-                if input.KeyCode == bind and not cloneref(game:GetService("UserInputService")):GetFocusedTextBox() then
-                        toggled = not toggled
-                        if toggled and not disable then
-                            ts:Create(toggle, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(255, 101, 104)}):Play()
-                            ts:Create(TextLabel_8, TweenInfo.new(0.3), {TextColor3 = Color3.fromRGB(27, 27, 27)}):Play()
-                            ts:Create(Options_3, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(27, 27, 27)}):Play()
-                        else
-                            ts:Create(toggle, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(27, 27, 27)}):Play()
-                            ts:Create(TextLabel_8, TweenInfo.new(0.3), {TextColor3 = Color3.fromRGB(229, 229, 229)}):Play()
-                            ts:Create(Options_3, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(163, 162, 165)}):Play()
-                        end
+                if not Uninjected and input.KeyCode == bind and not cloneref(game:GetService("UserInputService")):GetFocusedTextBox() then
+                    toggled = not toggled
+                    if toggled and not disable then
+                        ts:Create(toggle, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(255, 101, 104)}):Play()
+                        ts:Create(TextLabel_8, TweenInfo.new(0.3), {TextColor3 = Color3.fromRGB(27, 27, 27)}):Play()
+                        ts:Create(Options_3, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(27, 27, 27)}):Play()
+                    else
+                        ts:Create(toggle, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(27, 27, 27)}):Play()
+                        ts:Create(TextLabel_8, TweenInfo.new(0.3), {TextColor3 = Color3.fromRGB(229, 229, 229)}):Play()
+                        ts:Create(Options_3, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(163, 162, 165)}):Play()
+                    end
+                    call(toggled)
+                    setconfigtoggle()
+                    if disable then
+                        toggled = false
                         call(toggled)
-                        setconfigtoggle()
-                        if disable then
-                            toggled = false
-                            call(toggled)
-                        else
-                            writefile(string.format("Night/Config/%s/toggles/%s.lua", rootid, Name), tostring(toggled))
-                        end
+                    else
+                        writefile(string.format("Night/Config/%s/toggles/%s.lua", rootid, Name), tostring(toggled))
+                    end
                 end
             end)
             
