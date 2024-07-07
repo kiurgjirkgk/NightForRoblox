@@ -2,7 +2,7 @@
 local guilib = loadstring(game:HttpGet("https://raw.githubusercontent.com/kiurgjirkgk/NightForRoblox/main/uilib.lua"))()
 local executortext = "(Unknown Executor)"
 if identifyexecutor() and 15 >= #identifyexecutor() then
-    executortext = string.format("| Executor: %s", identifyexecutor())
+    executortext = string.format(" | Executor: %s", identifyexecutor())
 end 
 guilib:Init({title = string.format("Night RBX%s ", executortext)})
 local tabs = {
