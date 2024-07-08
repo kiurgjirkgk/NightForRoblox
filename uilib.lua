@@ -977,7 +977,7 @@ function guilib:NewTab(args)
                 if readfile(string.format("Night/Config/%s/sliders/%s.lua", rootid, Nameslid)) then
                     TextLabelsliderval.Text = readfile(string.format("Night/Config/%s/sliders/%s.lua", rootid, Nameslid))
                     Callslid(TextLabelsliderval.Text)
-                    if fill.Size.X.Scale >= 1 and Core.Visible then
+                    if fill.Size.X.Scale >= 1 and maingui.Enabled then
                         ts:Create(fill, TweenInfo.new(0.4), {Size = UDim2.new(1, 0, 0.95, 0)}):Play()
                     else
                         ts:Create(fill, TweenInfo.new(0.4), {Size = UDim2.new(TextLabelsliderval.Text / 100.2, 0, 0, 25)}):Play()
@@ -986,7 +986,7 @@ function guilib:NewTab(args)
             elseif Defslid and not isfile(string.format("Night/Config/%s/sliders/%s.lua", rootid, Nameslid)) then
                 TextLabelsliderval.Text = Defslid
                 Callslid(Defslid)
-                if fill.Size.X.Scale >= 1 and Core.Visible then
+                if fill.Size.X.Scale >= 1 and maingui.Enabled then
                     ts:Create(fill, TweenInfo.new(0.4), {Size = UDim2.new(1, 0, 0.95, 0)}):Play()
                 else
                     ts:Create(fill, TweenInfo.new(0.4), {Size = UDim2.new(TextLabelsliderval.Text / 100.2, 0, 0, 25)}):Play()
@@ -997,7 +997,7 @@ function guilib:NewTab(args)
             TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
             spawn(function()
             cloneref(game:GetService("UserInputService")).InputChanged:Connect(function(input)
-                if dragging and Core.Visible then
+                if dragging and maingui.Enabled then
                     local mouse = cloneref(game:GetService("UserInputService")):GetMouseLocation()
                     local relativePos = mouse-fill.AbsolutePosition
                     local percent = math.clamp(relativePos.X/Slider.AbsoluteSize.X, 0, 1)
